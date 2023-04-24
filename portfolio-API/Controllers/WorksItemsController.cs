@@ -11,55 +11,55 @@ namespace portfolio_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostItemsController : ControllerBase
+    public class WorksItemsController : ControllerBase
     {
-        private readonly PostContext _context;
+        private readonly WorksContext _context;
 
-        public PostItemsController(PostContext context)
+        public WorksItemsController(WorksContext context)
         {
             _context = context;
         }
 
-        // GET: api/PostItems
+        // GET: api/WorksItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PostItem>>> GetPostItems()
+        public async Task<ActionResult<IEnumerable<WorksItem>>> GetWorksItems()
         {
-          if (_context.PostItems == null)
+          if (_context.WorksItems == null)
           {
               return NotFound();
           }
-            return await _context.PostItems.ToListAsync();
+            return await _context.WorksItems.ToListAsync();
         }
 
-        // GET: api/PostItems/5
+        // GET: api/WorksItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PostItem>> GetPostItem(long id)
+        public async Task<ActionResult<WorksItem>> GetWorksItem(long id)
         {
-          if (_context.PostItems == null)
+          if (_context.WorksItems == null)
           {
               return NotFound();
           }
-            var postItem = await _context.PostItems.FindAsync(id);
+            var worksItem = await _context.WorksItems.FindAsync(id);
 
-            if (postItem == null)
+            if (worksItem == null)
             {
                 return NotFound();
             }
 
-            return postItem;
+            return worksItem;
         }
 
-        // PUT: api/PostItems/5
+        // PUT: api/WorksItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPostItem(long id, PostItem postItem)
+        public async Task<IActionResult> PutWorksItem(long id, WorksItem worksItem)
         {
-            if (id != postItem.Id)
+            if (id != worksItem.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(postItem).State = EntityState.Modified;
+            _context.Entry(worksItem).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace portfolio_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PostItemExists(id))
+                if (!WorksItemExists(id))
                 {
                     return NotFound();
                 }
@@ -80,41 +80,39 @@ namespace portfolio_API.Controllers
             return NoContent();
         }
 
-        // POST: api/PostItems
+        // POST: api/WorksItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PostItem>> PostPostItem(PostItem postItem)
+        public async Task<ActionResult<WorksItem>> PostWorksItem(WorksItem worksItem)
         {
-            _context.PostItems.Add(postItem);
+            _context.WorksItems.Add(worksItem);
             await _context.SaveChangesAsync();
-
-
-            return CreatedAtAction(nameof(GetPostItem), new { id = postItem.Id }, postItem);
+            return CreatedAtAction(nameof(GetWorksItem), new { id = worksItem.Id }, worksItem);
         }
 
-        // DELETE: api/PostItems/5
+        // DELETE: api/WorksItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePostItem(long id)
+        public async Task<IActionResult> DeleteWorksItem(long id)
         {
-            if (_context.PostItems == null)
+            if (_context.WorksItems == null)
             {
                 return NotFound();
             }
-            var postItem = await _context.PostItems.FindAsync(id);
-            if (postItem == null)
+            var worksItem = await _context.WorksItems.FindAsync(id);
+            if (worksItem == null)
             {
                 return NotFound();
             }
 
-            _context.PostItems.Remove(postItem);
+            _context.WorksItems.Remove(worksItem);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PostItemExists(long id)
+        private bool WorksItemExists(long id)
         {
-            return (_context.PostItems?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.WorksItems?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
