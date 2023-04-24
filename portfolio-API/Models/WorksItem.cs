@@ -5,8 +5,6 @@ public class WorksItem
     public string? Title { get; set; }
     public string? Description { get; set; }
     public string? ImageUrl { get; set; }
-
     public string? HyperText { get; set; }
-    public bool IsComplete { get; set; }
 
 }

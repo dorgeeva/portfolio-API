@@ -11,55 +11,55 @@ namespace portfolio_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostItemsController : ControllerBase
+    public class RecallItemsController : ControllerBase
     {
-        private readonly PostContext _context;
+        private readonly RecallContext _context;
 
-        public PostItemsController(PostContext context)
+        public RecallItemsController(RecallContext context)
         {
             _context = context;
         }
 
-        // GET: api/PostItems
+        // GET: api/RecallItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PostItem>>> GetPostItems()
+        public async Task<ActionResult<IEnumerable<RecallItem>>> GetRecallItems()
         {
-          if (_context.PostItems == null)
+          if (_context.RecallItems == null)
           {
               return NotFound();
           }
-            return await _context.PostItems.ToListAsync();
+            return await _context.RecallItems.ToListAsync();
         }
 
-        // GET: api/PostItems/5
+        // GET: api/RecallItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PostItem>> GetPostItem(long id)
+        public async Task<ActionResult<RecallItem>> GetRecallItem(int id)
         {
-          if (_context.PostItems == null)
+          if (_context.RecallItems == null)
           {
               return NotFound();
           }
-            var postItem = await _context.PostItems.FindAsync(id);
+            var recallItem = await _context.RecallItems.FindAsync(id);
 
-            if (postItem == null)
+            if (recallItem == null)
             {
                 return NotFound();
             }
 
-            return postItem;
+            return recallItem;
         }
 
-        // PUT: api/PostItems/5
+        // PUT: api/RecallItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPostItem(long id, PostItem postItem)
+        public async Task<IActionResult> PutRecallItem(int id, RecallItem recallItem)
         {
-            if (id != postItem.Id)
+            if (id != recallItem.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(postItem).State = EntityState.Modified;
+            _context.Entry(recallItem).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace portfolio_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PostItemExists(id))
+                if (!RecallItemExists(id))
                 {
                     return NotFound();
                 }
@@ -80,41 +80,39 @@ namespace portfolio_API.Controllers
             return NoContent();
         }
 
-        // POST: api/PostItems
+        // POST: api/RecallItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PostItem>> PostPostItem(PostItem postItem)
+        public async Task<ActionResult<RecallItem>> PostRecallItem(RecallItem recallItem)
         {
-            _context.PostItems.Add(postItem);
+            _context.RecallItems.Add(recallItem);
             await _context.SaveChangesAsync();
-
-
-            return CreatedAtAction(nameof(GetPostItem), new { id = postItem.Id }, postItem);
+            return CreatedAtAction(nameof(GetRecallItem), new { id = recallItem.Id }, recallItem);
         }
 
-        // DELETE: api/PostItems/5
+        // DELETE: api/RecallItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePostItem(long id)
+        public async Task<IActionResult> DeleteRecallItem(int id)
         {
-            if (_context.PostItems == null)
+            if (_context.RecallItems == null)
             {
                 return NotFound();
             }
-            var postItem = await _context.PostItems.FindAsync(id);
-            if (postItem == null)
+            var recallItem = await _context.RecallItems.FindAsync(id);
+            if (recallItem == null)
             {
                 return NotFound();
             }
 
-            _context.PostItems.Remove(postItem);
+            _context.RecallItems.Remove(recallItem);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PostItemExists(long id)
+        private bool RecallItemExists(int id)
         {
-            return (_context.PostItems?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.RecallItems?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
